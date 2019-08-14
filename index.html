@@ -96,14 +96,32 @@
         // https://playwithpromise.herokuapp.com/api/order-review/getid/{id} 
         // ответ будет обьект у которого будет поле orderList - массив с двух обьектов 
         // у обьектов будет productId еще сделать запрос по productId то есть два запроса ибо 2 обьекта в которых свой productId Promise.all в помощь!!
+        //https://playwithpromise.herokuapp.com/api/order-system/product/{id}
         // ВОТ ПРИМЕР ЗАПРОСА по первому URL! Конечно это нужно будет обернуть в промис!
-        var Req = new XMLHttpRequest();
-        Req.onload = function () {
-            if (!this.responseText) rej('BYE');
-            res(JSON.parse(this.responseText));
-        }
-        Req.open("GET", 'https://playwithpromise.herokuapp.com/api/order-review/last');
-        Req.send();
+//         var Req = new XMLHttpRequest();
+//         Req.onload = function () {
+//             if (!this.responseText) rej('BYE');
+//             res(JSON.parse(this.responseText));
+//         }
+//         Req.open("GET", 'https://playwithpromise.herokuapp.com/api/order-review/last');
+//         Req.send();
+        
+        function http(url) {
+                return new Promise((res, rej) => {
+                    var Req = new XMLHttpRequest();
+                    Req.open("GET", url);
+                    Req.send();
+                    Req.onload = function () {
+                        if (!this.responseText) rej('BYE');
+                        res(JSON.parse(this.responseText));
+                    }
+                })
+            }
+
+        http('https://playwithpromise.herokuapp.com/api/order-review/last')
+        
+        
+        
         
     </script>
 </body>
