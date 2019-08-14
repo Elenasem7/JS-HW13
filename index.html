@@ -106,7 +106,7 @@
 //         Req.open("GET", 'https://playwithpromise.herokuapp.com/api/order-review/last');
 //         Req.send();
         
-        function http(url) {
+         function http(url) {
                 return new Promise((res, rej) => {
                     var Req = new XMLHttpRequest();
                     Req.open("GET", url);
@@ -117,11 +117,15 @@
                     }
                 })
             }
-
-        http('https://playwithpromise.herokuapp.com/api/order-review/last')
+            http('https://playwithpromise.herokuapp.com/api/order-review/last')
+                .then(data => http(`https:playwithpromise.herokuapp.com/api/order-review/getid/${data._id}`))
+                .then(data => {
+                    let urls = data.orderList.map(a => `https://playwithpromise.herokuapp.com/api/order-system/product/${a.productId}`),
+                        array = urls.map(url => http(url));
+                    return Promise.all(array)
+                })
         
-        
-        
+           
         
     </script>
 </body>
